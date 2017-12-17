@@ -1,0 +1,73 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.yangxiaochen.euerka'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+ext {
+	springCloudVersion = 'Edgware.RELEASE'
+}
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+task runExampleService1 (dependsOn: [classes], type: JavaExec) {
+	group = "Run tasks"
+	description = "Run the example service1"
+	main = "com.yangxiaochen.euerka.EurekaServerApplication"
+	classpath = sourceSets.main.runtimeClasspath
+	args = ["--spring.profiles.active=peer1"]
+}
+
+task runExampleService2 (dependsOn: [classes], type: JavaExec) {
+	group = "Run tasks"
+	description = "Run the example service2"
+	main = "com.yangxiaochen.euerka.EurekaServerApplication"
+	classpath = sourceSets.main.runtimeClasspath
+	args = ["--spring.profiles.active=peer2"]
+}
+
+task runExampleService3 (dependsOn: [classes], type: JavaExec) {
+	group = "Run tasks"
+	description = "Run the example service3"
+	main = "com.yangxiaochen.euerka.EurekaServerApplication"
+	classpath = sourceSets.main.runtimeClasspath
+	args = ["--spring.profiles.active=peer3"]
+}
+
+
+task ExampleServiceStartScript(type: CreateStartScripts) {
+	mainClassName = "com.netflix.eureka.ExampleEurekaService"
+	applicationName = "ExampleEurekaService"
+	outputDir = new File(project.buildDir, 'scripts')
+	classpath = jar.outputs.files + project.configurations.runtime
+	defaultJvmOpts = ["-Deureka.client.props=sample-eureka-service"]
+}
+

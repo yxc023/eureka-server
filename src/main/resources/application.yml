@@ -1,0 +1,13 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/
+
+
+logging.level.org.springframework.cloud.netflix: debug
+logging.level.com.netflix: debug
