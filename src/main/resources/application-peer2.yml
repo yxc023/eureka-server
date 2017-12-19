@@ -9,11 +9,11 @@ spring:
 
 eureka:
   instance:
-#    hostname: eureka-peer2
+    hostname: eureka-peer2
   client:
 #    registerWithEureka: false
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/,http://localhost:8763/eureka/
+      defaultZone: http://eureka-peer1:8761/eureka/,http://eureka-peer3:8763/eureka/
     instance:
         metadataMap:
           instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

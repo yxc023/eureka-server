@@ -3,10 +3,8 @@ server:
 
 eureka:
   client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://localhost:${server.port}/eureka/
+    registerWithEureka: false
+    fetchRegistry: false
 
 
 logging.level.org.springframework.cloud.netflix: debug
