@@ -1,0 +1,57 @@
+gradle.taskGraph.whenReady { taskGraph ->
+    if (taskGraph.hasTask(distDir)) {
+        processResources {
+            exclude("application*.properties")
+            exclude("application*.yml")
+        }
+    }
+}
+
+task(distDir, type: Copy, dependsOn: bootRepackage) {
+
+    description = "Bundles the project as a distribution for lianjia op."
+    group = "distribution"
+    inputs.files(fileTree("dist"), fileTree("src/main/resources"), fileTree("$buildDir/libs"))
+    outputs.dir(file("${buildDir}/distributions"))
+    destinationDir = file("${buildDir}/distributions")
+
+    CopySpec binCopySpec = project.copySpec()
+    binCopySpec.from("dist/bin")
+    binCopySpec.into("bin")
+    binCopySpec.setFileMode(0775)
+
+    CopySpec confCopySpec = project.copySpec()
+    confCopySpec.from("src/main/resources")
+    confCopySpec.into("conf")
+    confCopySpec.include("application*.properties")
+    confCopySpec.include("application*.yml")
+
+
+
+    CopySpec jarChildSpec = project.copySpec()
+    jarChildSpec.into("lib");
+    jarChildSpec.from(file("$buildDir/libs"))
+    jarChildSpec.include("*.jar")
+    jarChildSpec.rename(/.*\.jar/, project.name + ".jar")
+
+
+    CopySpec distCopySpec = project.copySpec()
+    distCopySpec.into(project.name)
+    distCopySpec.from("dist")
+    distCopySpec.exclude("bin/*")
+    distCopySpec.with(jarChildSpec)
+    distCopySpec.with(binCopySpec)
+    distCopySpec.with(confCopySpec)
+
+    with(distCopySpec)
+}
+
+
+task(dist, type: Tar, dependsOn: bootRepackage) {
+    description = "Bundles the project as a distribution for lianjia op."
+    group = "distribution"
+    compression = Compression.GZIP
+
+    with(distDir)
+}
+

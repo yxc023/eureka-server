@@ -12,9 +12,14 @@ eureka:
 #    prefer-ip-address: true
     hostname: eureka-peer1
   client:
-#    registerWithEureka: false
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone: http://eureka-peer2:8762/eureka/,http://eureka-peer3:8763/eureka/
     instance:
         metadataMap:
-          instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+          instanceId: ${spring.application.name}:${euraka.instance.hostname}:${spring.application.instance_id}
+
+
+#logging.level.org.springframework.cloud.netflix: debug
+#logging.level.com.netflix: debug
