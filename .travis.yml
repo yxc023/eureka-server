@@ -1,3 +1,12 @@
 language: java
 install: false
 script: gradle clean dist
+
+deploy:
+  provider: releases
+  api_key: $API_KEY
+  file_glob: true
+  file: build/distributions/eureka-server-*.tgz
+  skip_cleanup: true
+  on:
+    tags: true
