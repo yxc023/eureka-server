@@ -1,2 +1,2 @@
 language: java
-script: gradle clean dist
+script: gradle dist
