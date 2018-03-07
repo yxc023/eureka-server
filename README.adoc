@@ -1,0 +1,49 @@
+= An eureka server based springboot
+
+image::https://travis-ci.org/yxc023/eureka-server.svg?branch=master[]
+
+== Download
+
+Download application from link:https://github.com/yxc023/eureka-server/releases[https://github.com/yxc023/eureka-server/releases]
+
+== Usage
+
+----
+tar xzvf eureka-server-xxx.tgz
+cd eureka-server-xxx
+---- 
+
+----
++eureka-server-xxx
+|-bin
+|-conf
+|-lib
+|-log
+|-var
+----
+
+start server
+----
+bin/run.sh run peer1
+----
+or
+----
+bin/run.sh start peer1
+----
+in backgroud
+
+TIP: 'peer1' is a config file name in dir 'conf'.
+
+TIP: There are 3 example config files in dir 'conf'
+
+TIP: You'd better define a explicit hostname for a eureka server instance, or set 'prefer-ip-address: true'.
+
+== How to config euraka server
+
+You can just modify example config files. 
+
+Read more in http://cloud.spring.io/spring-cloud-static/Edgware.SR2/single/spring-cloud.html#spring-cloud-eureka-server
+
+Read more in https://github.com/Netflix/eureka/wiki
+
+
