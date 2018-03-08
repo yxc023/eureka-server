@@ -1,6 +1,6 @@
 = An eureka server based springboot
 
-image::https://travis-ci.org/yxc023/eureka-server.svg?branch=master[]
+image::https://travis-ci.org/yxc023/eureka-server.svg[]
 
 == Download
 
